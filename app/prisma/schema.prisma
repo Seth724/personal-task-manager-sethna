@@ -4,12 +4,66 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String   @unique
+  email     String   @unique
+  // Relation: one user has many tasks
+  tasks     Task[]
+  createdAt DateTime @default(now())
+}
+
+model Task {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Foreign key to User
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  title       String
+  description String?
+  dueDate     DateTime?
+  priority    TaskPriority @default(MEDIUM)
+  status      TaskStatus   @default(TODO)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relation: one task has many logs
+  logs TaskLog[]
+
+  @@index([userId, status, priority])
+}
+
+model TaskLog {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Foreign key to Task
+  taskId String @db.ObjectId
+  task   Task   @relation(fields: [taskId], references: [id])
+
+  action String
+  at     DateTime @default(now())
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
 }
