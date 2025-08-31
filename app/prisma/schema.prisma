@@ -18,7 +18,7 @@ datasource db {
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   clerkId   String   @unique
-  email     String   @unique
+  email     String?   @unique
   // Relation: one user has many tasks
   tasks     Task[]
   createdAt DateTime @default(now())

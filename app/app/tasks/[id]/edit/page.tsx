@@ -1,23 +1,35 @@
 'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter, useParams } from 'next/navigation'
 import Header from '@/components/Header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
-import { useEffect, useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
 
 export default function EditTask() {
   const router = useRouter()
   const params = useParams() as { id: string }
   const [task, setTask] = useState<any>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('/api/tasks', { cache: 'no-store' })
+      setLoading(true)
+      setError(null)
+      const res = await fetch(`/api/tasks/${params.id}`, { cache: 'no-store' })
+      if (!res.ok) {
+        const text = await res.text().catch(() => '')
+        setError(`Failed to load task (${res.status}): ${text || 'No body'}`)
+        setLoading(false)
+        return
+      }
       const data = await res.json()
-      setTask(data.tasks.find((t: any) => t.id === params.id))
+      setTask(data.task)
+      setLoading(false)
     })()
   }, [params.id])
 
@@ -25,15 +37,25 @@ export default function EditTask() {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     const body = Object.fromEntries(fd.entries())
-    await fetch(`/api/tasks/${params.id}`, {
+
+    const res = await fetch(`/api/tasks/${params.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => '')
+      alert(`Update failed (${res.status}): ${text}`)
+      return
+    }
+
     router.push('/tasks')
   }
 
-  if (!task) return <div className="p-6">Loading…</div>
+  if (loading) return <div className="p-6">Loading…</div>
+  if (error) return <div className="p-6 text-red-600">{error}</div>
+  if (!task) return <div className="p-6">Task not found.</div>
 
   return (
     <>
@@ -47,7 +69,7 @@ export default function EditTask() {
               <Textarea name="description" defaultValue={task.description ?? ''} />
               <Input name="dueDate" type="date" defaultValue={task.dueDate ? task.dueDate.slice(0,10) : ''} />
               <Select name="priority" defaultValue={task.priority}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger><SelectValue placeholder="Priority" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="HIGH">High</SelectItem>
                   <SelectItem value="MEDIUM">Medium</SelectItem>
@@ -55,7 +77,7 @@ export default function EditTask() {
                 </SelectContent>
               </Select>
               <Select name="status" defaultValue={task.status}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="TODO">To do</SelectItem>
                   <SelectItem value="IN_PROGRESS">In progress</SelectItem>
@@ -64,7 +86,7 @@ export default function EditTask() {
               </Select>
               <div className="flex gap-2">
                 <Button type="submit">Save</Button>
-                <Button type="button" variant="outline" onClick={()=>history.back()}>Cancel</Button>
+                <Button type="button" variant="outline" onClick={() => history.back()}>Cancel</Button>
               </div>
             </form>
           </CardContent>
