@@ -105,3 +105,263 @@ a {
     @apply bg-background text-foreground;
   }
 }
+
+:root {
+  --grid: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.04) 1px, transparent 0);
+}
+body {
+  background:
+    linear-gradient(to bottom right, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 60%, hsl(210 40% 96%) 100%),
+    var(--grid);
+  background-size: 100% 100%, 16px 16px;
+}
+
+.card-elevated {
+  @apply rounded-2xl border bg-white/70 backdrop-blur shadow-sm transition hover:shadow-md;
+}
+
+.toolbar {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+/* Optional: make <main> breathe*/
+.main-wrap {
+  @apply max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10;
+}
+
+
+
+:root {
+  --grid: radial-gradient(circle at 1px 1px, rgba(0,0,0,.05) 1px, transparent 0);
+}
+body {
+  background:
+    radial-gradient(1200px 600px at 20% -10%, hsl(270 100% 95% / .7), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, hsl(200 100% 92% / .7), transparent 60%),
+    radial-gradient(1000px 800px at 50% 130%, hsl(330 100% 95% / .7), transparent 60%),
+    url("/images/console-bg.png"),
+    var(--grid);
+  background-size: auto, auto, auto, 600px, 16px 16px;
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+}
+
+/* Glass card + hover raise */
+.card-neo {
+  @apply rounded-2xl border border-white/20 bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-sm transition;
+}
+.card-neo:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(2, 6, 23, .1); }
+
+/* Gradient borders (wrap element in this) */
+.gradient-ring {
+  position: relative;
+}
+.gradient-ring::before {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: 1.25rem;
+  padding: 1px; background: linear-gradient(90deg,#a78bfa,#34d399,#60a5fa,#f472b6);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Buttons */
+.btn-pop {
+  @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-medium;
+  @apply bg-gradient-to-r from-fuchsia-500 to-sky-500 text-white shadow;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn-pop:hover { transform: translateY(-1px) scale(1.01); filter: brightness(1.05); }
+.btn-ghost {
+  @apply rounded-xl border border-black/10 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur;
+}
+
+/* Badges */
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+.badge-green { @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300; }
+.badge-amber { @apply bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300; }
+.badge-rose  { @apply bg-rose-100 text-rose-700  dark:bg-rose-400/10  dark:text-rose-300; }
+
+/* Animated gradient text */
+.gradient-text {
+  background: linear-gradient(90deg,#0ea5e9,#a855f7,#14b8a6,#f43f5e);
+  background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: gradient-x 8s ease infinite;
+}
+
+/* Subtle sparkle on hover */
+.shine-on-hover { position: relative; overflow: hidden; }
+.shine-on-hover::after {
+  content:""; position:absolute; inset:-40%;
+  background: conic-gradient(from 0deg,transparent 0 340deg,rgba(255,255,255,.35) 360deg);
+  transform: translateX(-60%) rotate(0deg);
+  transition: transform .8s cubic-bezier(.2,.9,.2,1);
+}
+.shine-on-hover:hover::after { transform: translateX(60%) rotate(20deg); }
+
+/* Floating decor */
+@keyframes floaty { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } }
+.floaty { animation: floaty 6s ease-in-out infinite; }
+
+/* Slow horizontal gradient animation */
+@keyframes gradient-x {
+  0%,100% { background-position: 0% 50% }
+  50%     { background-position: 100% 50% }
+}
+
+/* === Badges (colors for TODO / LOW etc.) === */
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+.badge-green { @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300; }
+.badge-amber { @apply bg-amber-100  text-amber-700  dark:bg-amber-400/10  dark:text-amber-300; }
+.badge-rose  { @apply bg-rose-100   text-rose-700   dark:bg-rose-400/10   dark:text-rose-300; }
+
+/* === Glass cards w/ dark mode === */
+.card-neo {
+  @apply rounded-2xl border border-white/20 bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-sm transition;
+}
+
+/* === Gradient buttons (use on Edit/Delete/Home/Tasks/Sign in/Sign up/Filter/Cancel) === */
+.btn-gradient {
+  @apply relative inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium text-white;
+  background: linear-gradient(90deg,#a78bfa,#34d399,#60a5fa,#f472b6);
+  background-size: 200% 200%;
+  transition: transform .15s ease, filter .2s ease;
+}
+.btn-gradient:hover { animation: gradient-x 3s ease infinite; transform: translateY(-1px) scale(1.01); }
+
+/* existing helpers from earlier answer (keep/ensure present) */
+.gradient-ring{position:relative}
+.gradient-ring::before{content:"";position:absolute;inset:-1px;border-radius:1.25rem;padding:1px;background:linear-gradient(90deg,#a78bfa,#34d399,#60a5fa,#f472b6);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.shine-on-hover{position:relative;overflow:hidden}
+.shine-on-hover::after{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 340deg,rgba(255,255,255,.35) 360deg);transform:translateX(-60%) rotate(0);transition:transform .8s cubic-bezier(.2,.9,.2,1)}
+.shine-on-hover:hover::after{transform:translateX(60%) rotate(20deg)}
+@keyframes gradient-x{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+
+/* ==== Professional light/dark backgrounds (less "pale") ==== */
+:root {
+  /* Light theme brand: black–blue–purple */
+  --brand-blue: 240 82% 55%;
+  --brand-purple: 268 85% 60%;
+  --brand-ring: 240 72% 40%;
+}
+body {
+  background:
+    linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(240 100% 98%) 40%, hsl(255 100% 97%) 100%),
+    radial-gradient(900px 500px at 100% 0%, hsl(220 95% 96% /.75), transparent 60%),
+    radial-gradient(1200px 600px at 0% -10%, hsl(260 95% 97% /.75), transparent 60%),
+    url("/images/console-bg.png"),
+    var(--grid);
+  background-attachment: fixed,fixed,fixed,fixed;
+}
+.dark body {
+  background:
+    radial-gradient(1200px 600px at 20% -10%, hsl(265 70% 16% /.45), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, hsl(220 70% 15% /.45), transparent 60%),
+    linear-gradient(180deg, hsl(222 47% 8%), hsl(240 19% 9%)),
+    
+    var(--grid);
+  background-attachment: fixed,fixed,fixed,fixed;
+}
+
+/* Glass cards with better dark contrast */
+.card-neo {
+  @apply rounded-2xl border border-white/15 bg-white/70 dark:bg-zinc-900/80 backdrop-blur-xl shadow-sm transition;
+}
+
+/* ===== Badges (colors incl. TODO + LOW) ===== */
+.badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium; }
+.badge-green { @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300; }
+.badge-amber { @apply bg-amber-100  text-amber-700  dark:bg-amber-400/10  dark:text-amber-300; }
+.badge-rose  { @apply bg-rose-100   text-rose-700   dark:bg-rose-400/10   dark:text-rose-300; }
+
+/* ===== Button set: different effects per action ===== */
+
+/* Primary (blue→purple) – use for "New Task", "Go to Tasks" */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-semibold text-white shadow-sm;
+  background: linear-gradient(135deg, hsl(var(--brand-blue)), hsl(var(--brand-purple)));
+  background-size: 200% 200%;
+  transition: transform .15s ease, box-shadow .2s ease, background-position .6s ease;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(31, 71, 255, .25); background-position: 100% 0; }
+.btn-primary:active { transform: translateY(0); }
+
+/* Neutral Glass – use for "Cancel" etc. */
+.btn-neutral {
+  @apply rounded-xl px-4 py-2 font-medium border text-foreground;
+  @apply bg-white/70 dark:bg-zinc-800/70 border-black/10 dark:border-white/10 backdrop-blur;
+  transition: transform .12s ease, background-color .2s ease, box-shadow .2s ease;
+}
+.btn-neutral:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(2,6,23,.12); }
+
+/* Outline Gradient – for "Edit" / subtle actions */
+.btn-outline-gradient {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium;
+  position: relative;
+  isolation: isolate;          /* keeps ::after under the content */
+  background: transparent;     /* ← important (no solid fill) */
+  color: hsl(var(--foreground));
+  line-height: 1;              /* crisper pill height */
+}
+.btn-outline-gradient::before {
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: linear-gradient(90deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), #06b6d4);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+.btn-outline-gradient::after {
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(90deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), #06b6d4);
+  opacity: 0; z-index: -1; transition: opacity .15s ease;
+}
+.btn-outline-gradient:hover { color: white; }
+.btn-outline-gradient:hover::after { opacity: 1; } /* soft fill on hover */
+.btn-outline-gradient:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--brand-ring) / .45);
+  transform: translateY(-1px);
+}
+
+/* Danger (red) – use for "Delete" */
+.btn-danger {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-semibold text-white shadow-sm;
+  background: linear-gradient(135deg, #ef4444, #f43f5e);
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn-danger:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 10px 22px rgba(239,68,68,.28); }
+
+/* Nav "chip" – use for Home/Tasks pills in header */
+.nav-chip {
+  @apply rounded-full px-3 py-1.5 text-sm font-medium;
+  background: linear-gradient(120deg, hsl(var(--brand-purple)) 0%, hsl(var(--brand-blue)) 100%);
+  color: white; box-shadow: 0 6px 16px rgba(31,71,255,.18);
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+.nav-chip:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(31,71,255,.24); }
+.nav-chip-ghost {
+  @apply rounded-full px-3 py-1.5 text-sm font-medium border border-white/20 bg-white/10 dark:bg-white/5 text-foreground;
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+.nav-chip-ghost:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(2,6,23,.12); }
+
+/* Keep from earlier answers */
+.gradient-ring{position:relative}
+.gradient-ring::before{content:"";position:absolute;inset:-1px;border-radius:1.25rem;padding:1px;background:linear-gradient(90deg,hsl(var(--brand-purple)),hsl(var(--brand-blue)),#06b6d4);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.shine-on-hover{position:relative;overflow:hidden}
+.shine-on-hover::after{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 340deg,rgba(255,255,255,.35) 360deg);transform:translateX(-60%) rotate(0);transition:transform .8s cubic-bezier(.2,.9,.2,1)}
+.shine-on-hover:hover::after{transform:translateX(60%) rotate(20deg)}
+@keyframes gradient-x{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+
+
+
+

@@ -5,6 +5,8 @@ import "@fontsource/geist/700.css";      // bold
 import "@fontsource/geist-mono/400.css"; // mono
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import { ThemeProvider } from './theme-provider'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +27,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-      <html lang="en">
-        <body className="min-h-screen bg-white text-black antialiased">
-          {children}
+      <html lang="en" suppressHydrationWarning>
+        <body className="min-h-screen antialiased transition-colors duration-300">
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

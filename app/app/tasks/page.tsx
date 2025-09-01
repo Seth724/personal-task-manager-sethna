@@ -1,4 +1,4 @@
-// app/app/tasks/page.tsx
+
 import Header from '@/components/Header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -15,7 +15,6 @@ export default async function Tasks({
 }: {
   searchParams: Promise<{ status?: string; priority?: string }>
 }) {
-  // ✅ Ensure user is signed in (avoid throwing inside requireUser)
   const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
@@ -32,17 +31,30 @@ export default async function Tasks({
     select: { id: true, title: true, status: true, priority: true, dueDate: true, description: true },
   })
 
+
+  const statusBadge = (s: string) =>
+  s === 'DONE' ? 'badge badge-green'
+  : s === 'IN_PROGRESS' ? 'badge badge-amber'
+  : 'badge badge-rose';        // TODO → rose/pink
+
+  const priorityBadge = (p: string) =>
+  p === 'HIGH' ? 'badge badge-rose'
+  : p === 'MEDIUM' ? 'badge badge-amber'
+  : 'badge badge-green';       // LOW → green
+
   return (
     <>
       <Header />
-      <main className="max-w-4xl mx-auto p-4 space-y-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Tasks</CardTitle>
-            <Button asChild><Link href="/tasks/new">+ New Task</Link></Button>
-          </CardHeader>
-          <CardContent className="flex gap-2">
-            <form className="flex gap-2">
+      <main className="main-wrap space-y-5">
+        <div className="gradient-ring card-neo p-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold">Tasks</h2>
+            <Button asChild className="btn-primary"><Link href="/tasks/new">+ New Task</Link></Button>
+
+          </div>
+
+          <div className="mt-4">
+            <form className="toolbar">
               <input type="hidden" name="q" value="1" />
               <Select name="status" defaultValue={sp.status ?? ''}>
                 <SelectTrigger className="w-40"><SelectValue placeholder="All Statuses" /></SelectTrigger>
@@ -62,28 +74,41 @@ export default async function Tasks({
                   <SelectItem value="LOW">Low</SelectItem>
                 </SelectContent>
               </Select>
-              <Button type="submit" variant="secondary">Filter</Button>
-            </form>
-          </CardContent>
-        </Card>
+              <Button type="submit" variant="secondary" className="btn-neutral">Filter</Button>
 
-        <div className="space-y-3">
+            </form>
+          </div>
+        </div>
+
+        <div className="grid gap-4">
           {tasks?.length ? tasks.map((t: any) => (
-            <Card key={t.id}>
-              <CardContent className="py-4 flex items-center justify-between">
-                <div>
-                  <div className="font-medium">{t.title}</div>
-                  <div className="text-sm text-muted-foreground">
-                    Status: {t.status} · Priority: {t.priority} · Due: {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '—'}
+            <div key={t.id} className="gradient-ring">
+              <Card className="card-neo hover:shadow-lg transition-all duration-150">
+                <CardContent className="py-4 flex items-center justify-between">
+                  <div className="min-w-0">
+                    <div className="font-semibold truncate">{t.title}</div>
+                    <div className="mt-1 grid grid-cols-3 gap-2 text-sm">
+                        <span className={statusBadge(t.status)}>Status: {t.status.replace('_',' ')}</span>
+                        <span className={priorityBadge(t.priority)}>Priority: {t.priority}</span>
+                        <span className="badge">Due: {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '—'}</span>
+                    </div>
+
+                    {t.description && (
+                      <p className="mt-2 line-clamp-2 text-muted-foreground">{t.description}</p>
+                    )}
                   </div>
-                </div>
-                <div className="flex gap-2">
-                  <Button asChild variant="outline"><Link href={`/tasks/${t.id}/edit`}>Edit</Link></Button>
-                  <DeleteTaskButton id={t.id} />
-                </div>
-              </CardContent>
-            </Card>
-          )) : <Card><CardContent className="py-6">No tasks yet.</CardContent></Card>}
+                  <div className="flex shrink-0 gap-2">
+                    <Button asChild className="btn-outline-gradient">
+                      <Link href={`/tasks/${t.id}/edit`} className="btn-outline-gradient h-9 px-4">Edit</Link>
+                    </Button>
+                    <DeleteTaskButton id={t.id} />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )) : (
+            <Card className="card-neo"><CardContent className="py-8 text-center">No tasks yet.</CardContent></Card>
+          )}
         </div>
       </main>
     </>
