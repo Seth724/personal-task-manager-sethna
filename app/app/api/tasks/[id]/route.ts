@@ -63,3 +63,8 @@ export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string 
   await prisma.task.delete({ where: { id } })
   return NextResponse.json({ ok: true })
 }
+
+
+
+
+

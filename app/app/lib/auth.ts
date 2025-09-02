@@ -41,3 +41,7 @@ export async function requireUser() {
     create: { clerkId: userId, email: null },
   })
 }
+
+
+
+
