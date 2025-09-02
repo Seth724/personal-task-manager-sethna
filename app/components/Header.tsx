@@ -1,14 +1,12 @@
-'use client'
-import ThemeToggle from '@/components/ThemeToggle'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { SignedIn, UserButton } from '@clerk/nextjs'
-import { usePathname } from 'next/navigation'
-import clsx from 'clsx'
+
+"use client"
+import ThemeToggle from "@/components/ThemeToggle"
+import Link from "next/link"
+import { SignedIn, UserButton } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
 
 export default function Header() {
   const pathname = usePathname()
-  const is = (p: string) => pathname === p
 
   return (
     <header className="sticky top-0 z-40">
@@ -19,12 +17,24 @@ export default function Header() {
             <span className="font-semibold tracking-tight">Task Manager</span>
           </Link>
 
-          <nav className="flex items-center gap-2">
-            <Link href="/" className={pathname === '/' ? 'nav-chip' : 'nav-chip-ghost'}>Home</Link>
-            <Link href="/tasks" className={pathname?.startsWith('/tasks') ? 'nav-chip' : 'nav-chip-ghost'}>Tasks</Link>
+          <nav className="flex items-center gap-1 sm:gap-2">
+            <Link
+              href="/"
+              className={pathname === "/" ? "nav-chip text-xs sm:text-sm" : "nav-chip-ghost text-xs sm:text-sm"}
+            >
+              Home
+            </Link>
+            <Link
+              href="/tasks"
+              className={
+                pathname?.startsWith("/tasks") ? "nav-chip text-xs sm:text-sm" : "nav-chip-ghost text-xs sm:text-sm"
+              }
+            >
+              Tasks
+            </Link>
             <ThemeToggle />
             <SignedIn>
-              <div className="ml-1 rounded-xl bg-white/40 dark:bg-white/5 px-2 py-1">
+              <div className="ml-1 rounded-xl bg-white/40 dark:bg-white/5 px-1 sm:px-2 py-1">
                 <UserButton afterSignOutUrl="/" />
               </div>
             </SignedIn>

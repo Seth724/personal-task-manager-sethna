@@ -1,42 +1,23 @@
-'use client'
 
-import { useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
-import { SunMedium, Moon } from 'lucide-react'
+"use client"
+
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button"
 
 export default function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return null
-
-  const isDark = resolvedTheme === 'dark'
+  const { theme, setTheme } = useTheme()
 
   return (
-    <button
-      role="switch"
-      aria-checked={isDark}
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className={[
-        // track
-        'relative h-8 w-14 rounded-full transition-all',
-        isDark
-          ? 'bg-zinc-700 ring-1 ring-white/15'
-          : 'bg-indigo-500 ring-1 ring-black/10',
-        'shadow-inner'
-      ].join(' ')}
-      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      className="h-9 w-9 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors"
     >
-      {/* knob */}
-      <span
-        className={[
-          'absolute top-1 left-1 h-6 w-6 rounded-full bg-white text-zinc-900 grid place-items-center shadow',
-          'transition-transform duration-300',
-          isDark ? 'translate-x-6' : 'translate-x-0'
-        ].join(' ')}
-      >
-        {isDark ? <Moon className="h-4 w-4" /> : <SunMedium className="h-4 w-4" />}
-      </span>
-    </button>
+      <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   )
 }
