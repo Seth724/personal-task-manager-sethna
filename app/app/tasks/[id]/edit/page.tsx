@@ -69,7 +69,7 @@ export default function EditTask() {
                 </Select>
               </div>
               <div className="flex gap-2 pt-2">
-                  <button type="submit" disabled={loading} className="btn-primary">{loading ? 'Creating…' : 'Create'}</button>
+                  <button type="submit" disabled={loading} className="btn-primary">{loading ? 'Creating…' : 'Save'}</button>
                   <button type="button" onClick={()=>history.back()} className="btn-neutral">Cancel</button>
               </div>
             </form>
