@@ -109,10 +109,11 @@ _All routes are protected by Clerk middleware._
 ## 📸 Screenshots
 
 
-<img width="800" alt="Home" src="public/screenshots/home.png" />  
-<img width="800" alt="Light Theme" src="public/screenshots/light-theme.png" />
-<img width="800" alt="Tasks" src="public/screenshots/tasks.png" />  
-<img width="800" alt="Mobile Navigation" src="public/screenshots/mobile-navigation" />
+<img width="1919" height="862" alt="Screenshot 2025-09-03 014149" src="https://github.com/user-attachments/assets/d8b747fd-8102-4977-a705-3836136e3af6" />
+<img width="1919" height="868" alt="Screenshot 2025-09-03 014128" src="https://github.com/user-attachments/assets/a53c1af0-4ca1-446a-a481-9bc22db76254" />
+<img width="1919" height="869" alt="Screenshot 2025-09-03 014348" src="https://github.com/user-attachments/assets/7782cc1f-d5b8-49f8-b97b-3022fa237d91" />
+<img width="616" height="867" alt="Screenshot 2025-09-03 014446" src="https://github.com/user-attachments/assets/78e18749-d2ce-4b37-a396-2f17b8ed82f6" />
+
 
 ---
 
@@ -147,3 +148,4 @@ MIT — feel free to use, modify, and share.
 ## 🙌 Acknowledgements
 
 - Clerk, Prisma, MongoDB Atlas, shadcn/ui, Tailwind, Next.js
+
