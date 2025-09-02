@@ -108,12 +108,11 @@ _All routes are protected by Clerk middleware._
 
 ## 📸 Screenshots
 
-> Replace these with your own images.
 
-<img width="1280" alt="Home" src="C:\Users\Asus\OneDrive\Pictures\Screenshots\Screenshot 2025-09-03 014128.png" />  
-<img width="1280" alt="Light Theme" src="C:\Users\Asus\OneDrive\Pictures\Screenshots\Screenshot 2025-09-03 014128.png" />
-<img width="1280" alt="Tasks" src="C:\Users\Asus\OneDrive\Pictures\Screenshots\Screenshot 2025-09-03 014348.png" />  
-<img width="1280" alt="Mobile Navigation" src="C:\Users\Asus\OneDrive\Pictures\Screenshots\Screenshot 2025-09-03 014446.png" />
+<img width="800" alt="Home" src="public/screenshots/home.png" />  
+<img width="800" alt="Light Theme" src="public/screenshots/light-theme.png" />
+<img width="800" alt="Tasks" src="public/screenshots/tasks.png" />  
+<img width="800" alt="Mobile Navigation" src="public/screenshots/mobile-navigation" />
 
 ---
 
