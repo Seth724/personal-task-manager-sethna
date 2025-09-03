@@ -1,6 +1,5 @@
-
 import Header from '@/components/Header'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
@@ -9,6 +8,7 @@ import { requireUser } from '@/app/lib/auth'
 import { prisma } from '@/app/lib/prisma'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import type { Prisma } from '@prisma/client'
 
 export default async function Tasks({
   searchParams,
@@ -21,9 +21,9 @@ export default async function Tasks({
   const sp = await searchParams
   const user = await requireUser()
 
-  const where: any = { userId: user.id }
-  if (sp.status && sp.status !== 'ALL') where.status = sp.status as any
-  if (sp.priority && sp.priority !== 'ALL') where.priority = sp.priority as any
+  const where:  Prisma.TaskWhereInput = { userId: user.id }
+  if (sp.status && sp.status !== 'ALL') where.status = sp.status as 'TODO' | 'IN_PROGRESS' | 'DONE'
+  if (sp.priority && sp.priority !== 'ALL') where.priority = sp.priority as 'HIGH' | 'MEDIUM' | 'LOW'
 
   const tasks = await prisma.task.findMany({
     where,
@@ -31,7 +31,7 @@ export default async function Tasks({
     select: { id: true, title: true, status: true, priority: true, dueDate: true, description: true },
   })
 
-
+  type Task = typeof tasks[number]
   const statusBadge = (s: string) =>
   s === 'DONE' ? 'badge badge-green'
   : s === 'IN_PROGRESS' ? 'badge badge-amber'
@@ -81,7 +81,7 @@ export default async function Tasks({
         </div>
 
         <div className="grid gap-4">
-          {tasks?.length ? tasks.map((t: any) => (
+          {tasks?.length ? tasks.map((t: Task) => (
             <div key={t.id} className="gradient-ring">
               <Card className="card-neo hover:shadow-lg transition-all duration-150">
                 <CardContent className="py-4 flex items-center justify-between">
