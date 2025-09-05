@@ -1,39 +1,46 @@
-﻿
+﻿# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# StatusCode        : 200
-# StatusDescription : OK
-# Content           : # Created by https://www.toptal.com/developers/git
-#                     ignore/api/node
-#                     # Edit at https://www.toptal.com/developers/gitign
-#                     ore?templates=node
-                    
-#                     ### Node ###
-#                     # Logs
-#                     logs
-#                     *.log
-#                     npm-debug.log*
-#                     yarn-debug.log*
-#                     ya...
-# RawContent        : HTTP/1.1 200 OK
-#                     Connection: keep-alive
-#                     CF-RAY: 9761ac075a436d94-AMS
-#                     x-robots-tag: noindex, nofollow
-#                     cf-cache-status: DYNAMIC
-#                     alt-svc: h3=":443"; ma=86400
-#                     Content-Length: 2392
-#                     Content-Type: text...
-# Forms             : 
-# Headers           : {[Connection, keep-alive], [CF-RAY, 
-#                     9761ac075a436d94-AMS], [x-robots-tag, noindex, 
-#                     nofollow], [cf-cache-status, DYNAMIC]...}
-# Images            : {}
-# InputFields       : {}
-# Links             : {}
-# ParsedHtml        : 
-# RawContentLength  : 2392
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
+# testing
+/coverage
 
-    node_modules/
-    .next/
-    dist/
-    build/
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+/lib/generated/prisma
+
+# clerk configuration (can include secrets)
+/.clerk/
