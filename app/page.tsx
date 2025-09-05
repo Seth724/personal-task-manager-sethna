@@ -1,8 +1,6 @@
 import Header from "@/components/Header"
 import HomeCta from "@/components/HomeCta"
 import ContactSection from "../components/ContactForm"
-import Footer from "../components/Footer"
-
 
 
 export default async function HomePage() {
