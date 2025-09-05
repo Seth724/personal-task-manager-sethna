@@ -5,7 +5,6 @@ import "@fontsource/geist/700.css";      // bold
 import "@fontsource/geist-mono/400.css"; // mono
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import { ThemeProvider } from './theme-provider'
 
 const geistSans = Geist({
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
         <body className="min-h-screen antialiased transition-colors duration-300">
           <ThemeProvider>
             {children}
