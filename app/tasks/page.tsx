@@ -46,7 +46,7 @@ export default async function Tasks({
     <>
       <Header />
       <main className="main-wrap space-y-5">
-        <div className="gradient-ring card-neo p-4">
+        <div className="gradient-ring card-neo p-4  overflow-visible">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">Tasks</h2>
             <Button asChild className="btn-primary"><Link href="/tasks/new">+ New Task</Link></Button>
@@ -54,8 +54,8 @@ export default async function Tasks({
           </div>
 
           <div className="mt-4">
-            <form className="toolbar">
-              <input type="hidden" name="q" value="1" />
+            
+              {/* <input type="hidden" name="q" value="1" />
               <Select name="status" defaultValue={sp.status ?? ''}>
                 <SelectTrigger className="w-40"><SelectValue placeholder="All Statuses" /></SelectTrigger>
                 <SelectContent>
@@ -74,9 +74,59 @@ export default async function Tasks({
                   <SelectItem value="LOW">Low</SelectItem>
                 </SelectContent>
               </Select>
-              <Button type="submit" variant="secondary" className="btn-neutral">Filter</Button>
+              <Button type="submit" variant="secondary" className="btn-neutral">Filter</Button> */}
+              {/* ...inside your filter card... */}
+<form className="toolbar flex flex-wrap items-center gap-3">
+  <input type="hidden" name="q" value="1" />
 
-            </form>
+  <Select name="status" defaultValue={sp.status ?? ''}>
+    <SelectTrigger className="w-44">
+      <SelectValue placeholder="All Statuses" />
+    </SelectTrigger>
+    <SelectContent
+      position="popper"
+      sideOffset={8}
+      align="start"
+      /* key part: force on top + solid surface + match width */
+      className="z-[9999] w-[var(--radix-select-trigger-width)] rounded-xl border bg-popover text-popover-foreground shadow-2xl max-h-60 overflow-auto sm:max-h-none"
+    >
+      <SelectItem value="ALL" className="cursor-pointer rounded-md">All Statuses</SelectItem>
+      <SelectItem value="TODO" className="cursor-pointer rounded-md">To do</SelectItem>
+      <SelectItem value="IN_PROGRESS" className="cursor-pointer rounded-md">In progress</SelectItem>
+      <SelectItem value="DONE" className="cursor-pointer rounded-md">Done</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <Select name="priority" defaultValue={sp.priority ?? ''}>
+    <SelectTrigger className="w-44">
+      <SelectValue placeholder="All Priorities" />
+    </SelectTrigger>
+    <SelectContent
+      position="popper"
+      sideOffset={8}
+      align="start"
+      className="z-[9999] w-[var(--radix-select-trigger-width)] rounded-xl border bg-popover text-popover-foreground shadow-2xl  max-h-60 overflow-auto sm:max-h-none"
+    >
+      <SelectItem value="ALL" className="cursor-pointer rounded-md">All Priorities</SelectItem>
+      <SelectItem value="HIGH" className="cursor-pointer rounded-md">High</SelectItem>
+      <SelectItem value="MEDIUM" className="cursor-pointer rounded-md">Medium</SelectItem>
+      <SelectItem value="LOW" className="cursor-pointer rounded-md">Low</SelectItem>
+    </SelectContent>
+  </Select>
+
+      <Button
+    type="submit"
+    variant="secondary"
+
+    style={{ maxWidth: '50px' }} // Ensures button has a maximum width
+    className="btn-neutral  sm:w-auto"
+  >
+    Filter
+  </Button>
+</form>
+
+
+            
           </div>
         </div>
 

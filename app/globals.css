@@ -1192,3 +1192,41 @@ html[data-theme="dark"] {
 
 
 
+/* Push content down while any filter select is open */
+.toolbar:has([data-state="open"]) {
+  margin-bottom: 12rem; /* adjust to your longest menu */
+}
+
+/* globals.css */
+.toolbar:has([data-state="open"]) { margin-bottom: 12rem; }
+
+@media (max-width: 640px) {
+  .toolbar:has([data-state="open"]) { margin-bottom: 16rem; }
+}
+
+
+/* Push buttons down while any select is open in form */
+.form-with-dropdowns:has([data-state="open"]) { margin-bottom: 14rem; }
+
+@media (min-width: 640px) {
+  .form-with-dropdowns:has([data-state="open"]) { margin-bottom: 10rem; }
+}
+
+
+
+/* --- tiny button + layout helpers --- */
+.btn-sm { @apply text-sm h-9 px-3 rounded-xl font-medium; }
+.btn-primary { @apply btn-sm bg-violet-600 hover:bg-violet-500 text-white shadow; }
+.btn-neutral { @apply btn-sm bg-zinc-800/70 hover:bg-zinc-700/70 text-zinc-100; }
+
+/* keep action row safely below open dropdowns on small screens */
+.form-with-dropdowns { @apply relative; }
+@media (max-width: 640px) {
+  .form-with-dropdowns { padding-bottom: 4.5rem; }
+}
+
+
+/* Gives popper a subtle shadow separation and ensures it stacks high */
+[data-radix-popper-content-wrapper] > div[role="listbox"] {
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
